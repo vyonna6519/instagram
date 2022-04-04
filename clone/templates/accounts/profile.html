@@ -19,11 +19,7 @@
 						
 					{%else%}
 						 {%if is_follow%}
-						 <a href="{% url 'user_follow' profile.user.id %}" class="btn btn-danger">Unfollow</a>
-						 {%else%}
-						 <a href="{% url 'user_follow' profile.user.id %}" class="btn btn-success">Follow</a>
-				         {%endif%}
-				        
+						
 					{%endif%}
 			</div>
 		
