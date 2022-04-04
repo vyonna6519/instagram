@@ -1,10 +1,14 @@
-from django.urls import path
+from django.urls import path,include
 from . import views
+from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth.views import LoginView
 
 urlpatterns=[
-    path('^$',views.index,name = 'index'),
+    path('',views.index,name = 'index'),
+    path('accounts/', include('django_registration.backends.one_step.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('timeline',views.timeline,name = 'timeline'),
     path('accounts/profile',views.profile,name = 'profile'),
     path('accounts/create',views.create,name = 'create'),
@@ -12,8 +16,10 @@ urlpatterns=[
     path('accounts/updateProfile',views.updateProfile,name = 'updateProfile'),
     path('accounts/single',views.single,name = 'single'),
     path('like',views.likePost,name= 'likePost'),
-	path('follow',views.follow,name="user_follow"),
 	path('editPost',views.editPost,name="editPost"),
+    path('login/', LoginView.as_view(), {"next_page": '/'}),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'), 
+    
 
 ]
 if settings.DEBUG:
