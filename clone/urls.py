@@ -17,8 +17,8 @@ urlpatterns=[
     path(r'accounts/single/<int:image_id>',views.single,name = 'single'),
     path('like/<int:image_id>',views.likePost,name= 'likePost'),
 	path('editPost',views.editPost,name="editPost"),
-    path('login/', LoginView.as_view(), {"next_page": '/'}),
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'), 
+    path(r'login/', LoginView.as_view(), {"next_page": '/'}),
+    path(r'logout/', auth_views.LogoutView.as_view(), name='logout'), 
     
 
 ]
