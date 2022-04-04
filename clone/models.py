@@ -18,8 +18,8 @@ class Image(models.Model):
 	image_caption = models.CharField(max_length = 60, blank = True)
 	created_at = models.DateTimeField(auto_now_add = True)
 	profile = models.ForeignKey(User,on_delete=models.CASCADE)
-	user_profile = models.ForeignKey(Profile,on_delete=models.CASCADE)
-	likes = models.ManyToManyField(User,related_name = 'likes', blank = True)
+	# user_profile = models.ForeignKey(Profile,on_delete=models.CASCADE)
+	likes = models.IntegerField(default=0)
 	image = models.ImageField(upload_to = 'images/', blank = True)
 
 	@classmethod
@@ -33,7 +33,7 @@ class Image(models.Model):
 	@classmethod
 	def update_caption(cls,id,caption):
 		updated_caption = cls.objects.filter(pk = id).update(image_caption = caption)
-		return updated_location	
+		return updated_caption	
 
 	@classmethod
 	def get_image_by_id(cls,image_id):
@@ -48,7 +48,7 @@ class Image(models.Model):
 class Comment(models.Model):
 	comment = models.CharField(max_length = 1000)
 	created_at = models.DateTimeField(auto_now_add = True)
-	image = models.ForeignKey(Image,on_delete=models.CASCADE)
+	# image = models.ForeignKey(Image,on_delete=models.CASCADE)
 	profile = models.ForeignKey(User,on_delete=models.CASCADE)
 
 	def __str__(self):
@@ -58,18 +58,4 @@ class Comment(models.Model):
 def get_first_name(self):
     return self.first_name
 
-class Follow(models.Model):
-    user_from = models.ForeignKey(User,related_name='rel_from_set',on_delete=models.CASCADE)
-    user_to = models.ForeignKey(User, related_name='rel_to_set',on_delete=models.CASCADE)
-  
-    def __str__(self):
-        return '{} follows {}'.format(self.user_from, self.user_to)
-
-
-# Add following field to User dynamically
-User.add_to_class('following',
-                  models.ManyToManyField('self',
-                                         through=Follow,
-                                         related_name='followers',
-                                         symmetrical=False))
 
